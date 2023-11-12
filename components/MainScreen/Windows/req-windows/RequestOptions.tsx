@@ -46,7 +46,7 @@ export default function RequestOption() {
   //   }, [optionsState]);
   return (
     <>
-      <div className="mt-3">
+      <div className="mt-3 h-full select-none" draggable={false}> 
         <div className="h-7 flex gap-2 mb-2">
           <button
             className="px-5 hover:text-gray-400 relative "

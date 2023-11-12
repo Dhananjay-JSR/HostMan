@@ -141,7 +141,7 @@ return (
       ></div>
     </div>
     <div
-      className=" "
+      className=" relative"
       style={{
         width: `calc(75% + ${finalMouseDirection.mouseDistance}px`,
       }}
