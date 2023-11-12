@@ -16,9 +16,7 @@ export default function ResponseModal({children}:{
       RightDirection: false,
     });
 
-    useEffect(()=>{
-        console.log(finalMouseDirection)
-    },[finalMouseDirection])
+
     React.Children
     useEffect(() => {
       function Test(e: MouseEvent) {
@@ -136,7 +134,7 @@ export default function ResponseModal({children}:{
           // Start Capturing When Button is Down
           setIsDown((prev) => true);
     }}></div>
-    <div className="p-2">
+    <div className="p-2 h-40">
 
     {children}
     </div>

@@ -34,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className + " bg-neutral-950 text-white min-h-screen flex flex-col"}>
+      <body className={inter.className + " bg-neutral-950 overflow-hidden text-white min-h-screen flex flex-col"}>
         <Navbar />
         {children}
       </body>
