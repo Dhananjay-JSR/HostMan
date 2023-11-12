@@ -90,23 +90,20 @@ export default function ResponseView() {
                 )}
               </button>
               {state.response != null &&
-                (state.response.data.responseHeaders["content-type"] ==
-                  "text/html; charset=utf-8") 
-                 &&
-              <button
-                className="px-5 hover:text-gray-400 relative "
-                onClick={() => {
-                  setCurrentTab(Tabs.PREVIEW);
-                }}
-              >
-                Preview
-                {currentTab == Tabs.PREVIEW && (
-                  <div className="absolute h-0.5  left-0 w-full bg-red-500"></div>
+                state.response.data.responseHeaders["content-type"] ==
+                  "text/html; charset=utf-8" && (
+                  <button
+                    className="px-5 hover:text-gray-400 relative "
+                    onClick={() => {
+                      setCurrentTab(Tabs.PREVIEW);
+                    }}
+                  >
+                    Preview
+                    {currentTab == Tabs.PREVIEW && (
+                      <div className="absolute h-0.5  left-0 w-full bg-red-500"></div>
+                    )}
+                  </button>
                 )}
-              </button>
-
-                }
-
 
               <button
                 className="px-5 hover:text-gray-400 relative "
@@ -129,18 +126,21 @@ export default function ResponseView() {
                   }
                 }
               >
-                {
-                   state.response&&state.response.data.responseHeaders["content-type"] ==
-                   "text/html; charset=utf-8" ?  state.response?.data.responsePayload : <pre>
-                   <code>
-                     {JSON.stringify(
-                       state.response?.data.responsePayload,
-                       null,
-                       4
-                     )}
-                   </code>
-                 </pre> 
-                }
+                {state.response &&
+                state.response.data.responseHeaders["content-type"] ==
+                  "text/html; charset=utf-8" ? (
+                  state.response?.data.responsePayload
+                ) : (
+                  <pre>
+                    <code>
+                      {JSON.stringify(
+                        state.response?.data.responsePayload,
+                        null,
+                        4
+                      )}
+                    </code>
+                  </pre>
+                )}
                 {/* <pre></pre> */}
                 {/* */}
               </div>
