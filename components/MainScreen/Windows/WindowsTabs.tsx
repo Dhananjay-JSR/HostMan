@@ -1,15 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import OpenTabs from "./OpenTabs";
 
-function OpenTabs() {
-  return (
-    <div className="w-44 h-full bg-neutral-950 border-t-2  border-red-600 px-3 flex gap-2 items-center">
-      <span className="text-xs text-green-500">GET</span>
-      <span>Untitled</span>
-    </div>
-  );
-}
+
 
 function AddButtion() {
   return (

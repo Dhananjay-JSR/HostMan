@@ -1,6 +1,7 @@
 "use client";
+import { StorageContext } from "@/components/Context/Context";
 import axios, { AxiosResponse } from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 enum Tabs {
   RAW_DATA,
@@ -13,7 +14,8 @@ export default function ResponseView() {
     any,
     any
   >>(null);
-  const [isLoading, setLoading] = useState(false);
+//   const [isLoading, setLoading] = useState(false);
+const {state} = useContext(StorageContext);
   return (
     <>
       {/* <button
@@ -31,7 +33,7 @@ export default function ResponseView() {
         Run Reqq
       </button> */}
       <>
-        {isLoading ? (
+        {state.isLoading ? (
           <div className="h-full w-full flex justify-center items-center">
             <div>
               <svg

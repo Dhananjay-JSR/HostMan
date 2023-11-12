@@ -1,11 +1,13 @@
 'use client'
 
-import React from "react";
+import { StorageContext } from "@/components/Context/Context";
+import React, { useContext } from "react";
 import { useEffect, useState } from "react"
 
 export default function ResponseModal({children}:{
     children:React.ReactNode
 }){
+    const {state} = useContext(StorageContext);
     const [isDown, setIsDown] = useState(false);
     const [iniMousePosY, setInitPosY] = useState<number>(0);
     const [finalMouseDirection, setFinalMouseDirection] = useState<{
@@ -123,22 +125,28 @@ export default function ResponseModal({children}:{
       };
     // eslint-disable-next-line react-hooks/exhaustive-deps 
     }, [isDown]);
-   return <div style={{
-    height: `calc(150px + ${finalMouseDirection.mouseDistance}px ) `
-   }} className="absolute bottom-0 w-full bg-neutral-950 ">
-    <div className="h-[1.5px] w-full hover:h-1.5 bg-gray-800 cursor-crosshair transition-all hover:transition-all hover:bg-red-600 hover:cursor-grab" onMouseDown={(e)=>{
-          // console.log(e.clientX);
-          let clientY = e.clientY;
-          // Start Capturing Inital Postion
-          setInitPosY((prev) => clientY);
-          // Start Capturing When Button is Down
-          setIsDown((prev) => true);
-    }}></div>
-    <div style={{
-        height:`calc(160px +  ${finalMouseDirection.mouseDistance}px)`
-    }} className="p-2 overflow-y-auto">
+    if (state.isInitialRequestDown){
+        return <><div style={{
+            height: `calc(150px + ${finalMouseDirection.mouseDistance}px ) `
+           }} className="absolute bottom-0 w-full bg-neutral-950 ">
+            <div className="h-[1.5px] w-full hover:h-1.5 bg-gray-800 cursor-crosshair transition-all hover:transition-all hover:bg-red-600 hover:cursor-grab" onMouseDown={(e)=>{
+                  // console.log(e.clientX);
+                  let clientY = e.clientY;
+                  // Start Capturing Inital Postion
+                  setInitPosY((prev) => clientY);
+                  // Start Capturing When Button is Down
+                  setIsDown((prev) => true);
+            }}></div>
+            <div style={{
+                height:`calc(160px +  ${finalMouseDirection.mouseDistance}px)`
+            }} className="p-2 overflow-y-auto">
+        
+            {children}
+            </div>
+            </div>
+            </>
+    }
 
-    {children}
-    </div>
-    </div>
+    return <></>
+   
 }

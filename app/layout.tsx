@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { StorageProvider } from "@/components/Context/Context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,7 @@ function Navbar() {
         HOSTMAN
       </h2>
       <div className="flex gap-4">
-        <button   className="text-sm  border-green-300 border bg-emerald-950 text-emerald-300 px-4 rounded-sm hover:bg-emerald-950/20 hover:text-emerald-700 transition-all hover:transition-all">
+        <button className="text-sm  border-green-300 border bg-emerald-950 text-emerald-300 px-4 rounded-sm hover:bg-emerald-950/20 hover:text-emerald-700 transition-all hover:transition-all">
           Save My Workspace
         </button>
         <button className="bg-red-500 hover:bg-red-700 hover:transition-all transition-all text-white font-semibold px-3 py-1 text-sm rounded-sm">
@@ -34,9 +35,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className + " bg-neutral-950 overflow-hidden text-white min-h-screen flex flex-col"}>
+      <body
+        className={
+          inter.className +
+          " bg-neutral-950 overflow-hidden text-white min-h-screen flex flex-col"
+        }
+      >
         <Navbar />
-        {children}
+        <StorageProvider>{children}</StorageProvider>
       </body>
     </html>
   );
