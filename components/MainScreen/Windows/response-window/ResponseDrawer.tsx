@@ -134,7 +134,9 @@ export default function ResponseModal({children}:{
           // Start Capturing When Button is Down
           setIsDown((prev) => true);
     }}></div>
-    <div className="p-2 h-40">
+    <div style={{
+        height:`calc(160px +  ${finalMouseDirection.mouseDistance}px)`
+    }} className="p-2 overflow-y-auto">
 
     {children}
     </div>

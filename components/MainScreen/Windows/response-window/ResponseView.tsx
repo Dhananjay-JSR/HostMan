@@ -16,7 +16,7 @@ export default function ResponseView() {
   const [isLoading, setLoading] = useState(false);
   return (
     <>
-      <button
+      {/* <button
         onClick={async () => {
           setLoading(true);
           let Data = await axios.post("http://localhost:3000/api", {
@@ -29,7 +29,7 @@ export default function ResponseView() {
         }}
       >
         Run Reqq
-      </button>
+      </button> */}
       <>
         {isLoading ? (
           <div className="h-full w-full flex justify-center items-center">
@@ -135,7 +135,7 @@ export default function ResponseView() {
               >
                 <iframe
                   sandbox=""
-                  frameborder="0"
+                //   frameborder={0}
                   className="w-full bg-white"
                   srcDoc={responseData?.data.responsePayload}
                 ></iframe>
