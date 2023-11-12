@@ -1,16 +1,22 @@
 "use client";
+import { AxiosResponse } from "axios";
 import { Dispatch, createContext, useReducer } from "react";
 type AppState = {
   method: "GET" | "POST" | "PATCH" | "DELETE";
   url: string;
   isInitialRequestDown: boolean;
   isLoading: boolean;
+  response:null | AxiosResponse<
+  any,
+  any
+>
 };
 export enum AppOperations {
   UPDATE_METHOD,
   UPDATE_URL,
   TOGGLE_INITIAL,
   TOGGLE_LOADING,
+  UPDATE_RESPONSE
 }
 
 const DefaultState: AppState = {
@@ -18,6 +24,7 @@ const DefaultState: AppState = {
   url: "https://echo.dhananjaay.dev/",
   isInitialRequestDown: false,
   isLoading: false,
+  response:null
 };
 
 function ReducerFunction(
@@ -49,6 +56,11 @@ function ReducerFunction(
         ...state,
         isLoading: action.payload,
       };
+    case AppOperations.UPDATE_RESPONSE:
+        return {
+            ...state,
+            response:action.payload
+        }
     default:
       return {
         ...state,

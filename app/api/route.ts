@@ -37,7 +37,7 @@ export async function POST(REQUEST: NextRequest) {
   let ResponseData = await AxiosIntersecpt()({
     // responseType: "arraybuffer",
     method: data.method,
-    url: "https://dhananjaay.dev",
+    url: data.url,
     headers: {
       // this logs the IP of Original Request
       "x-server-ip": REQUEST.ip,
@@ -45,14 +45,26 @@ export async function POST(REQUEST: NextRequest) {
   });
 
   //   console.log(ResponseData)
-//   console.log(ResponseData.data);
+  //   console.log(ResponseData.data);
   let dataSizeInBytes = Buffer.from(JSON.stringify(ResponseData.data)).length;
 
   const dataSizeInKB = dataSizeInBytes / 1024;
+
+  if (ResponseData.headers["content-type"] === "application/json") {
+    return NextResponse.json({
+      responsePayload: ResponseData.data,
+      responseHeaders: ResponseData.headers,
+      responseDuration: ResponseData.duration,
+      responseSize: dataSizeInKB.toFixed(2),
+    });
+  }
+
+
   return NextResponse.json({
     responsePayload: ResponseData.data.toString(),
     responseHeaders: ResponseData.headers,
     responseDuration: ResponseData.duration,
     responseSize: dataSizeInKB.toFixed(2),
   });
+
 }

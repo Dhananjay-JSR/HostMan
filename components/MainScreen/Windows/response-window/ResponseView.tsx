@@ -10,12 +10,14 @@ enum Tabs {
 }
 export default function ResponseView() {
   const [currentTab, setCurrentTab] = useState(Tabs.RAW_DATA);
-  const [responseData, setResponseData] = useState<null | AxiosResponse<
-    any,
-    any
-  >>(null);
-//   const [isLoading, setLoading] = useState(false);
-const {state} = useContext(StorageContext);
+  //   const [responseData, setResponseData] = useState<null | AxiosResponse<
+  //     any,
+  //     any
+  //   >>(null);
+  //   const [isLoading, setLoading] = useState(false);
+  const { state } = useContext(StorageContext);
+  // console.log( state.response.data.responseHeaders["content-type"] ==
+  // "text/html; charset=utf-8")
   return (
     <>
       {/* <button
@@ -55,20 +57,20 @@ const {state} = useContext(StorageContext);
               <div className="gap-2 flex">
                 <span className="text-gray-400 font-semibold">STATUS</span>
                 <span className="text-green-300">
-                  {responseData?.status} &#183; {responseData?.statusText}
+                  {state.response?.status} &#183; {state.response?.statusText}
                 </span>
               </div>
               <div className="gap-2 flex">
                 <span className="text-gray-400 font-semibold">Time</span>
                 <span className="text-green-300">
-                  {responseData?.data.responseDuration} ms
+                  {state.response?.data.responseDuration} ms
                 </span>
               </div>
               <div className="gap-2 flex">
                 <span className="text-gray-400 font-semibold">Size</span>
                 <span className="text-green-300">
                   {" "}
-                  {responseData?.data.responseSize} KB
+                  {state.response?.data.responseSize} KB
                 </span>
               </div>
             </div>
@@ -87,9 +89,10 @@ const {state} = useContext(StorageContext);
                   <div className="absolute h-0.5  left-0 w-full bg-red-500"></div>
                 )}
               </button>
-              {responseData == null ||
-                responseData.data.responseHeaders["content-type"] ==
-                  "text/html; charset=utf-8"}
+              {state.response != null &&
+                (state.response.data.responseHeaders["content-type"] ==
+                  "text/html; charset=utf-8") 
+                 &&
               <button
                 className="px-5 hover:text-gray-400 relative "
                 onClick={() => {
@@ -101,6 +104,10 @@ const {state} = useContext(StorageContext);
                   <div className="absolute h-0.5  left-0 w-full bg-red-500"></div>
                 )}
               </button>
+
+                }
+
+
               <button
                 className="px-5 hover:text-gray-400 relative "
                 onClick={() => {
@@ -122,7 +129,20 @@ const {state} = useContext(StorageContext);
                   }
                 }
               >
-                {responseData?.data.responsePayload}
+                {
+                   state.response&&state.response.data.responseHeaders["content-type"] ==
+                   "text/html; charset=utf-8" ?  state.response?.data.responsePayload : <pre>
+                   <code>
+                     {JSON.stringify(
+                       state.response?.data.responsePayload,
+                       null,
+                       4
+                     )}
+                   </code>
+                 </pre> 
+                }
+                {/* <pre></pre> */}
+                {/* */}
               </div>
             )}
 
@@ -137,9 +157,9 @@ const {state} = useContext(StorageContext);
               >
                 <iframe
                   sandbox=""
-                //   frameborder={0}
+                  //   frameborder={0}
                   className="w-full bg-white"
-                  srcDoc={responseData?.data.responsePayload}
+                  srcDoc={state.response?.data.responsePayload}
                 ></iframe>
               </div>
             )}
@@ -155,7 +175,7 @@ const {state} = useContext(StorageContext);
               >
                 <table className="w-full border border-gray-600 ">
                   <tbody>
-                    {Object.keys(responseData?.data.responseHeaders).map(
+                    {Object.keys(state.response?.data.responseHeaders).map(
                       (keys) => {
                         return (
                           <tr key={keys} className="">
@@ -163,7 +183,7 @@ const {state} = useContext(StorageContext);
                               {keys}
                             </td>
                             <td className="border w-1/2 border-gray-600 px-2 break-all">
-                              {responseData?.data.responseHeaders[keys]}
+                              {state.response?.data.responseHeaders[keys]}
                             </td>
                           </tr>
                         );

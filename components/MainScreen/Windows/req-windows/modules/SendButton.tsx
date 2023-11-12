@@ -26,6 +26,10 @@ export default function SendButton() {
           method: state.method,
         });
         dispatch({
+          type: AppOperations.UPDATE_RESPONSE,
+          payload: Data,
+        });
+        dispatch({
           type: AppOperations.TOGGLE_LOADING,
           payload: false,
         });
