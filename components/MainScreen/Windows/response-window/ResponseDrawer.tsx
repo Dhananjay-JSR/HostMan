@@ -3,7 +3,9 @@
 import React from "react";
 import { useEffect, useState } from "react"
 
-export default function ResponseDrawer(){
+export default function ResponseModal({children}:{
+    children:React.ReactNode
+}){
     const [isDown, setIsDown] = useState(false);
     const [iniMousePosY, setInitPosY] = useState<number>(0);
     const [finalMouseDirection, setFinalMouseDirection] = useState<{
@@ -121,6 +123,7 @@ export default function ResponseDrawer(){
         document.removeEventListener("mousemove", Test);
         document.removeEventListener("mouseup", MouseDown);
       };
+    // eslint-disable-next-line react-hooks/exhaustive-deps 
     }, [isDown]);
    return <div style={{
     height: `calc(150px + ${finalMouseDirection.mouseDistance}px ) `
@@ -133,5 +136,9 @@ export default function ResponseDrawer(){
           // Start Capturing When Button is Down
           setIsDown((prev) => true);
     }}></div>
+    <div className="p-2">
+
+    {children}
+    </div>
     </div>
 }

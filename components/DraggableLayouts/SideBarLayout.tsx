@@ -119,6 +119,7 @@ useEffect(() => {
     document.removeEventListener("mousemove", Test);
     document.removeEventListener("mouseup", MouseDown);
   };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [isDown]);
 return (
   <main className="flex-grow h-full w-full flex">
