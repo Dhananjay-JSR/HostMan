@@ -11,7 +11,7 @@ enum Tabs {
 enum BodyType {
   NONE = "None",
   APPLICATION_JSON = "application/json",
-  APPLICATION_XML = "application/json",
+  APPLICATION_XML = "application/xml",
   APPLICATION_X_FORM_ENCODE = "application/x-www-form-encoded",
 }
 
@@ -423,14 +423,35 @@ function RequestOptionViews({
               </option>
             </select>
           </div>
+          {(optionState.Body.type == BodyType.APPLICATION_XML ||
+            optionState.Body.type == BodyType.APPLICATION_JSON) && (
+            <>
+              <div className="min-h-[170px]  font-bold  mt-1">
+                <textarea
+                  value={optionState.Body.payload}
+                  onChange={(e) => {
+                    let Value = e.currentTarget.value;
+                    setOptionState((prev) => {
+                      let NewState = { ...prev };
+                      NewState.Body.payload = Value;
+                      return NewState;
+                    });
+                  }}
+                  rows={6}
+                  spellCheck={false}
+                  className=" resize-none p-1 w-full  bg-gray-800 font-normal"
+                />
+              </div>
+            </>
+          )}
+          
           {optionState.Body.type == BodyType.NONE && (
             <div className="min-h-[170px] flex justify-center items-center font-bold underline ">
               This Request won&apos;t be Using Any Body
             </div>
           )}
           {optionState.Body.type == BodyType.APPLICATION_X_FORM_ENCODE && (
-            <div className="max-h-[170px]  font-bold underline overflow-y-auto">
-            
+            <div className="max-h-[170px]  font-bold underline overflow-y-auto  mt-3">
               <table className="w-full border-collapse border border-slate-500 ">
                 <tbody>
                   {optionState.Body.forms.map((formValue) => {
@@ -444,7 +465,7 @@ function RequestOptionViews({
                             value={formValue.key}
                             onChange={(eve) => {
                               let VALYE = eve.target.value;
-                              console.log(VALYE)
+                              // console.log(VALYE);
                               // check if it's the last Input and on Press create new Value
                               // console.log(optionState.Parameter.indexOf(e), optionState.Parameter.length-1)
                               if (
@@ -483,12 +504,12 @@ function RequestOptionViews({
                                     Body: {
                                       ...prev.Body,
                                       forms: [
-                                      ...prev.Body.forms.filter(
-                                        (f) => f.id !== formValue.id
-                                      ),
-                                      ...NewBlock,
-                                    ],
-                                  }
+                                        ...prev.Body.forms.filter(
+                                          (f) => f.id !== formValue.id
+                                        ),
+                                        ...NewBlock,
+                                      ],
+                                    },
                                   };
                                 });
                               } else {
