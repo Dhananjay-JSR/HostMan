@@ -1,9 +1,14 @@
 // @ts-nocheck
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { db } from "@/db/connection";
 import { Proxies } from "@/db/schema";
+import {
+  BodyType,
+  OptionTypes,
+  AuthType,
+} from "@/components/MainScreen/Windows/req-windows/modules/interface";
 
 function AxiosIntersecpt() {
   axios.interceptors.request.use(
@@ -35,16 +40,77 @@ export async function POST(REQUEST: NextRequest) {
     url: string;
     method: string;
     email?: string;
-  };
+  } & OptionTypes;
+
+  const { url, method, email, ...rest } = data;
+  // axios()
+  // console.clear();
+
+  let ApplicationData = {
+    headers: rest.Header.filter((e) => e.key != "").reduce((acc, curr) => {
+      acc[curr.key] = curr.Value;
+      return acc;
+    }, {}),
+    params: rest.Parameter.filter((e) => e.key != "").reduce((acc, curr) => {
+      acc[curr.key] = curr.Value;
+      return acc;
+    }, {}),
+  } as AxiosRequestConfig<any>;
+
+  if (rest.Body.type == BodyType.APPLICATION_JSON) {
+    ApplicationData.headers["Content-Type"] = "application/json";
+    ApplicationData.data = JSON.parse(rest.Body.payload);
+  }
+
+  if (rest.Body.type == BodyType.APPLICATION_XML) {
+    ApplicationData.headers["Content-Type"] = "application/xml";
+    ApplicationData.data = rest.Body.payload;
+  }
+
+  if (rest.Body.type == BodyType.APPLICATION_X_FORM_ENCODE) {
+    ApplicationData.headers["Content-Type"] =
+      "application/x-www-form-urlencoded";
+    console.log(rest.Body.forms);
+    ApplicationData.data = rest.Body.forms
+      .filter((e) => e.key != "")
+      .reduce((acc, curr) => {
+        acc[curr.key] = curr.Value;
+        return acc;
+      }, {});
+  }
+  if (rest.Body.type == BodyType.NONE) {
+    delete ApplicationData.data;
+    ApplicationData.headers["Content-Type"] = "none";
+  }
+
+  if (rest.Auth.type == AuthType.BASIC) {
+    ApplicationData.auth = {
+      username: rest.Auth.username,
+      password: rest.Auth.password,
+    };
+  }
+
+  if (rest.Auth.type == AuthType.BEARER) {
+    ApplicationData.headers["Authorization"] = `Bearer ${rest.Auth.token}`;
+  }
+  ApplicationData.headers[ "x-server-ip"]=REQUEST.ip;
+
+
+  // console.log(
+  //   JSON.stringify(
+  //     (() => {
+  //       return ApyaloadData;
+  //     })(),
+  //     null,
+  //     2
+  //   )
+  // );
 
   let ResponseData = await AxiosIntersecpt()({
     // responseType: "arraybuffer",
     method: data.method,
     url: data.url,
-    headers: {
-      // this logs the IP of Original Request
-      "x-server-ip": REQUEST.ip,
-    },
+   ...ApplicationData,
   });
 
   if (data.email) {
@@ -104,4 +170,5 @@ export async function POST(REQUEST: NextRequest) {
     responseDuration: ResponseData.duration,
     responseSize: dataSizeInKB.toFixed(2),
   });
+
 }

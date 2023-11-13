@@ -20,9 +20,9 @@ export default function Home() {
           {/* <EnvironmentViewer /> */}
         </TabsHolder>
       <RequestPanel/>
-     {/* <ResponseDrawer>
+     <ResponseDrawer>
       <ResponseView/>
-     </ResponseDrawer> */}
+     </ResponseDrawer>
       </MainDraggableLayout>
     </>
   );
