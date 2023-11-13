@@ -1,6 +1,7 @@
 
 import MainDraggableLayout from "@/components/DraggableLayouts/SideBarLayout";
 import EnvironmentViewer from "@/components/MainScreen/EnvironmentViewer";
+import RequestPanel from "@/components/MainScreen/RequestPanel";
 import TabsHolder from "@/components/MainScreen/TabsHolder";
 import WindowsContainer from "@/components/MainScreen/Windows/WindowsTabs";
 import RequestOption from "@/components/MainScreen/Windows/req-windows/RequestOptions";
@@ -18,13 +19,10 @@ export default function Home() {
           <WindowsContainer />
           {/* <EnvironmentViewer /> */}
         </TabsHolder>
-       <div className="p-3 ">
-        <UrlInputHolder/>
-        <RequestOption/>
-       </div>
-     <ResponseDrawer>
+      <RequestPanel/>
+     {/* <ResponseDrawer>
       <ResponseView/>
-     </ResponseDrawer>
+     </ResponseDrawer> */}
       </MainDraggableLayout>
     </>
   );

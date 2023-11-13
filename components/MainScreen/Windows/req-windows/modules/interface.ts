@@ -12,7 +12,11 @@ export  enum BodyType {
     APPLICATION_XML = "application/xml",
     APPLICATION_X_FORM_ENCODE = "application/x-www-form-encoded",
   }
-
+export enum AuthType{
+    NONE = "None",
+    BASIC = "Basic",
+    BEARER = "Bearer "
+}
 
   export type OptionTypes = {
     Parameter: {
@@ -21,7 +25,7 @@ export  enum BodyType {
         Value: string;
     }[];
     Body: {
-        type: string;
+        type: BodyType;
         payload: string;
         forms: {
             id: number;
@@ -35,7 +39,7 @@ export  enum BodyType {
         Value: string;
     }[];
     Auth: {
-        type: string;
+        type: AuthType;
         username: string;
         password: string;
         token: string;

@@ -30,6 +30,8 @@ export default function SideBarWindow() {
         ]);
       }
     }
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.user?.email, state.isLoading, status]);
   useEffect(() => {
     // Populate Result on First Mount
@@ -48,6 +50,7 @@ export default function SideBarWindow() {
       // only runs on being authenticated
       PopulateResult();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
   // return <div className="bg-red-400 h-full">Hello WOrld</div>
   if (status === "unauthenticated") {

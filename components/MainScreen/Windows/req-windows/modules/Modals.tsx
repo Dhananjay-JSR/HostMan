@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { OptionTypes, BodyType } from "./interface";
+import { OptionTypes, BodyType, AuthType } from "./interface";
 
 export function ParameterModal({
   optionState,
@@ -338,7 +338,7 @@ export function BodyModal({
               let BodyType = e.currentTarget.value;
               setOptionState((prev) => {
                 let OldState = { ...prev };
-                OldState.Body.type = BodyType
+                OldState.Body.type = BodyType as BodyType
                 return OldState;
               });
             }}
@@ -590,26 +590,26 @@ export function AuthorisationModal({
             let AuthType = e.currentTarget.value;
             setOptionState((prev) => {
               let OldState = { ...prev };
-              OldState.Auth.type = AuthType;
+              OldState.Auth.type = AuthType as AuthType;
               return OldState;
             });
           }}
           defaultValue={optionState.Auth.type}
           className="focus:outline-none ml-3 bg-gray-800 py-1 px-2 rounded-sm text-white"
         >
-          <option className=" " value="NONE">
+          <option className=" " value={AuthType.NONE}>
             None
           </option>
-          <option value="BASIC_AUTH">Basic Auth</option>
-          <option value="BEARER_TOKEN">Bearer Token</option>
+          <option value={AuthType.BASIC}>Basic Auth</option>
+          <option value={AuthType.BEARER}>Bearer Token</option>
         </select>
       </div>
-      {optionState.Auth.type == "NONE" && (
+      {optionState.Auth.type == AuthType.NONE && (
         <div className="min-h-[170px] flex justify-center items-center font-bold underline ">
           This Request won&apos;t be Using Any Auth
         </div>
       )}
-      {optionState.Auth.type == "BEARER_TOKEN" && (
+      {optionState.Auth.type == AuthType.BEARER && (
         <div className="min-h-[170px] pt-3">
           <span>Bearer Token</span>
           <input
@@ -628,7 +628,7 @@ export function AuthorisationModal({
         </div>
       )}
 
-      {optionState.Auth.type == "BASIC_AUTH" && (
+      {optionState.Auth.type == AuthType.BASIC && (
         <div className="pt-3">
           <div className="w-fit flex flex-col gap-4">
             <div className="w-full flex flex-row justify-between">

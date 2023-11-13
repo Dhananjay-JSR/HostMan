@@ -5,41 +5,16 @@ import MainRenderer from "./modules/MainRenderer";
 
 
 
-export default function RequestOption() {
+export default function RequestOption({
+  optionsState,
+  setOptionState
+}:{
+  optionsState: OptionTypes,
+  setOptionState: Dispatch<SetStateAction<OptionTypes>>
+
+}) {
   const [currentTab, setCurrentTab] = useState(Tabs.PARAMETERS);
-  const [optionsState, setOptionState] = useState<OptionTypes>({
-    Parameter: [
-      {
-        id: 1,
-        key: "",
-        Value: "",
-      },
-    ],
-    Body: {
-      type: BodyType.NONE,
-      payload: "",
-      forms: [
-        {
-          id: 1,
-          key: "",
-          value: "",
-        },
-      ],
-    },
-    Header: [
-      {
-        id: 1,
-        key: "",
-        Value: "",
-      },
-    ],
-    Auth: {
-      type: "NONE",
-      username: "",
-      password: "",
-      token: "",
-    },
-  });
+  
 
   //   useEffect(() => {
   //     console.log(optionsState);
