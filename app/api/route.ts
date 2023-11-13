@@ -48,17 +48,18 @@ export async function POST(REQUEST: NextRequest) {
   });
 
   if (data.email) {
-    //   let TempData =await axios.post("/api/storage",{
-    //     email: data.url,
-    //     url:data.url,
-    //     method:data.method
-    // })
-    let TempData = await db.insert(Proxies).values({
-      email: data.email as any,
-      method: data.method.toUpperCase() as any,
-      url: data.url,
-    });
-    console.log("Proxy inserted")
+    console.warn("Post is Disabled for Now")
+    
+
+    // let TempData = await db.insert(Proxies).values({
+    //   email: data.email as any,
+    //   method: data.method.toUpperCase() as any,
+    //   url: data.url,
+    // });
+    // console.log("Proxy inserted")
+
+
+
     // if (Data.rowCount === 0) {
     //   return NextResponse.json(
     //     {

@@ -36,7 +36,7 @@ export default function OpenTabs() {
   }, [showTextInput]);
   return (
     <div className="w-44 h-full bg-neutral-950 border-t-2  border-red-600 px-3 flex gap-2 items-center">
-      <span className="text-xs text-green-500">{state.method}</span>
+      <span className={`text-xs ${state.method=="GET" ? "text-green-500" : state.method=="DELETE" ? "text-red-600" : state.method=="PATCH" ?"text-yellow-400" : "text-teal-600"}  font-semibold`}>{state.method}</span>
       {showTextInput ? (
         <input
           onChange={(eve) => {

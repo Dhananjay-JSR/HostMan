@@ -7,13 +7,13 @@ export default function HistoryPlay({
     method,
     url
 }:{
-    method:string,
+    method:"DELETE"| "POST" | "GET" | "PATCH" ,
     url:string
 }) {
   const {dispatch} = useContext(StorageContext)
   return (
     <div className="text-xs flex justify-between px-3 gap-2">
-      <span className="text-red-500">{method}</span>
+      <span className={` ${method=="GET" ? "text-green-500" : method=="DELETE" ? "text-red-600" : method=="PATCH" ?"text-yellow-400" : "text-teal-600"}`}>{method}</span>
       <span className="truncate">{url}</span>
       <button className="group" onClick={()=>{
         dispatch({

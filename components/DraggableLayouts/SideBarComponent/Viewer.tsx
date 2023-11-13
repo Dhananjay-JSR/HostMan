@@ -71,8 +71,8 @@ export default function SideBarWindow() {
   if (status == "authenticated") {
     return (
       <div className="h-full w-full p-2">
-        <h2 className="text-center">Request History</h2>
-        <div className="mt-2 flex flex-col gap-3">
+        <h2 className="text-center text-xl ">Request History</h2>
+        <div className="mt-3.5 flex flex-col gap-3">
           {loading ? (
             <Skeleton />
           ) : (
@@ -80,7 +80,7 @@ export default function SideBarWindow() {
               <HistoryPlay
                 key={prev.id}
                 url={prev.url!}
-                method={prev.method!}
+                method={prev.method! as any}
               />
             ))
           )}

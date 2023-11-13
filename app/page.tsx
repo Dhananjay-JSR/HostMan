@@ -16,7 +16,7 @@ export default function Home() {
       <MainDraggableLayout>
         <TabsHolder>
           <WindowsContainer />
-          <EnvironmentViewer />
+          {/* <EnvironmentViewer /> */}
         </TabsHolder>
        <div className="p-3 ">
         <UrlInputHolder/>

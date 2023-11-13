@@ -19,9 +19,9 @@ function Navbar() {
         HOSTMAN
       </h2>
       <div className="flex gap-4 items-center">
-        <button className="text-sm  border-green-300 border bg-emerald-950 text-emerald-300 px-4 rounded-sm hover:bg-emerald-950/20 hover:text-emerald-700 transition-all hover:transition-all">
+        {/* <button className="text-sm  border-green-300 border bg-emerald-950 text-emerald-300 px-4 rounded-sm hover:bg-emerald-950/20 hover:text-emerald-700 transition-all hover:transition-all">
           Save My Workspace
-        </button>
+        </button> */}
      <SignInButtion/>
       </div>
     </nav>

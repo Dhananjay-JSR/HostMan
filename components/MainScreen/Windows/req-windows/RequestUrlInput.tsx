@@ -13,7 +13,7 @@ export default function UrlInputHolder() {
      <MethodDropdown/>
       <URLInput/>
     <SendButton/>
-      <button className="px-4 bg-red-200 rounded-sm text-black">Save</button>
+      {/* <button className="px-4 bg-red-200 rounded-sm text-black">Save</button> */}
     </div>
   );
 }
