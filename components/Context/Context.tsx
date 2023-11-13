@@ -1,5 +1,7 @@
 "use client";
 import { AxiosResponse } from "axios";
+import { Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
 import { Dispatch, createContext, useReducer } from "react";
 type AppState = {
   method: "GET" | "POST" | "PATCH" | "DELETE";
@@ -84,10 +86,14 @@ export const StorageContext = createContext<{
   }
 );
 
-export function StorageProvider({ children }: { children: React.ReactNode }) {
+export function StorageProvider({ children,session }: { children: React.ReactNode,session:Session }) {
   const [state, dispatch] = useReducer(ReducerFunction, DefaultState);
 
   return (
+    
+    <SessionProvider session={session}>
+
+
     <StorageContext.Provider
       value={{
         state: state,
@@ -96,5 +102,6 @@ export function StorageProvider({ children }: { children: React.ReactNode }) {
     >
       {children}
     </StorageContext.Provider>
+    </SessionProvider>
   );
 }
