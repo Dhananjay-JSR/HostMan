@@ -2,10 +2,12 @@
 
 import { AppOperations, StorageContext } from "@/components/Context/Context";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import { useContext } from "react";
 
 export default function SendButton() {
   const { state, dispatch } = useContext(StorageContext);
+  const {data} = useSession()
   return (
     <button
       disabled={state.url == ""}
@@ -21,10 +23,21 @@ export default function SendButton() {
           type: AppOperations.TOGGLE_LOADING,
           payload: true,
         });
-        let Data = await axios.post("http://localhost:3000/api", {
-          url: state.url,
-          method: state.method,
-        });
+
+        let Data
+        if (data?.user?.email){
+          Data= await axios.post("/api", {
+            url: state.url,
+            method: state.method,
+            email:data?.user?.email
+          });
+        }else {
+          Data= await axios.post("/api", {
+            url: state.url,
+            method: state.method,
+          });
+        }
+        
         dispatch({
           type: AppOperations.UPDATE_RESPONSE,
           payload: Data,

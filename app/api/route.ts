@@ -2,6 +2,8 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import axios from "axios";
+import { db } from "@/db/connection";
+import { Proxies } from "@/db/schema";
 
 function AxiosIntersecpt() {
   axios.interceptors.request.use(
@@ -32,6 +34,7 @@ export async function POST(REQUEST: NextRequest) {
   const data = (await REQUEST.json()) as {
     url: string;
     method: string;
+    email?: string;
   };
 
   let ResponseData = await AxiosIntersecpt()({
@@ -43,6 +46,41 @@ export async function POST(REQUEST: NextRequest) {
       "x-server-ip": REQUEST.ip,
     },
   });
+
+  if (data.email) {
+    //   let TempData =await axios.post("/api/storage",{
+    //     email: data.url,
+    //     url:data.url,
+    //     method:data.method
+    // })
+
+    let TempData = await db.insert(Proxies).values({
+      email: data.email as any,
+      method: data.method.toUpperCase() as any,
+      url: data.url,
+    });
+    // if (Data.rowCount === 0) {
+    //   return NextResponse.json(
+    //     {
+    //       message: "Something Went Wrong",
+    //     },
+    //     {
+    //       status: 500,
+    //       statusText: "Internal Server Error",
+    //     }
+    //   );
+    // } else {
+    //   return NextResponse.json(
+    //     {
+    //       message: "Data Inserted",
+    //     },
+    //     {
+    //       status: 201,
+    //       statusText: "Created",
+    //     }
+    //   );
+    // }
+  }
 
   //   console.log(ResponseData)
   //   console.log(ResponseData.data);
@@ -59,12 +97,10 @@ export async function POST(REQUEST: NextRequest) {
     });
   }
 
-
   return NextResponse.json({
     responsePayload: ResponseData.data.toString(),
     responseHeaders: ResponseData.headers,
     responseDuration: ResponseData.duration,
     responseSize: dataSizeInKB.toFixed(2),
   });
-
 }
