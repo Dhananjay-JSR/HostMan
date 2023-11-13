@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState }  from "react";
 import React from "react";
+import SideBarWindow from "./SideBarComponent/Viewer";
 export default function MainDraggableLayout({
     children
 }:{
@@ -124,11 +125,17 @@ useEffect(() => {
 return (
   <main className="flex-grow h-full w-full flex">
     <div
-      className={``}
+      className={`flex flex-row`}
       style={{
         width: `calc(25% - ${finalMouseDirection.mouseDistance}px`,
       }}
     >
+      <div style={{
+        width: "calc(100% - 6px)",
+        
+      }} className=" h-full">
+        <SideBarWindow/>
+      </div>
       <div
         className="h-full w-[1.5px] hover:w-1.5 transition-all hover:transition-all hover:bg-red-600 hover:cursor-grab bg-gray-800 ml-auto select-none"
         onMouseDown={(e) => {

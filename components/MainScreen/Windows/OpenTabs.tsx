@@ -31,6 +31,7 @@ export default function OpenTabs() {
   useEffect(() => {
     if (showTextInput) {
       InputRef.current.focus();
+      InputRef.current.select();
     }
   }, [showTextInput]);
   return (
