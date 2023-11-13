@@ -94,12 +94,12 @@ export const StorageContext = createContext<{
   }
 );
 
-export function StorageProvider({ children,session }: { children: React.ReactNode,session:Session }) {
+export function StorageProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(ReducerFunction, DefaultState);
 
   return (
     
-    <SessionProvider session={session}>
+    <SessionProvider >
 
 
     <StorageContext.Provider

@@ -30,9 +30,7 @@ function Navbar() {
 
 export default function RootLayout({
   children,
-  session
 }: {
-  session:Session
   children: React.ReactNode;
 }) {
   return (
@@ -43,7 +41,7 @@ export default function RootLayout({
           " bg-neutral-950 overflow-hidden text-white min-h-screen flex flex-col"
         }
       >
-          <StorageProvider session={session}>
+          <StorageProvider >
         <Navbar />
           {children}
           </StorageProvider>
