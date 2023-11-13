@@ -1,0 +1,1 @@
+ALTER TYPE "method" ADD VALUE 'PATCH';

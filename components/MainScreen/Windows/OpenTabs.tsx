@@ -1,6 +1,6 @@
 "use client";
 
-import { StorageContext } from "@/components/Context/Context";
+import { AppOperations, StorageContext } from "@/components/Context/Context";
 import {
   MutableRefObject,
   useContext,
@@ -10,10 +10,12 @@ import {
 } from "react";
 
 export default function OpenTabs() {
-  const [value, setValue] = useState("Untitled");
+  // const [value, setValue] = useState("Untitled");
+  // const {state} = useContext(StorageContext)
   const [showTextInput, setShowTextInput] = useState(false);
+
   const InputRef = useRef() as MutableRefObject<HTMLInputElement>;
-  const { state } = useContext(StorageContext);
+  const { state ,dispatch} = useContext(StorageContext);
 
 
   useEffect(()=>{
@@ -31,16 +33,21 @@ export default function OpenTabs() {
   useEffect(() => {
     if (showTextInput) {
       InputRef.current.focus();
+      InputRef.current.select();
     }
   }, [showTextInput]);
   return (
     <div className="w-44 h-full bg-neutral-950 border-t-2  border-red-600 px-3 flex gap-2 items-center">
-      <span className="text-xs text-green-500">{state.method}</span>
+      <span className={`text-xs ${state.method=="GET" ? "text-green-500" : state.method=="DELETE" ? "text-red-600" : state.method=="PATCH" ?"text-yellow-400" : "text-teal-600"}  font-semibold`}>{state.method}</span>
       {showTextInput ? (
         <input
           onChange={(eve) => {
             let NewValue = eve.currentTarget.value;
-            setValue((prev) => NewValue);
+            // setValue((prev) => NewValue);
+            dispatch({
+              type:AppOperations.UPDATE_WINDOW_NAME,
+              payload:NewValue
+            })
           }}
           onKeyUp={(event) => {
             // console.log(event.key)
@@ -51,7 +58,7 @@ export default function OpenTabs() {
           ref={InputRef}
           type="text"
           className="w-full bg-neutral-950 outline-none"
-          value={value}
+          value={state.windowName}
         />
       ) : (
         <button
@@ -63,7 +70,7 @@ export default function OpenTabs() {
             // console.log(e.detail)
           }}
         >
-          {value}
+          {state.windowName}
         </button>
       )}
     </div>

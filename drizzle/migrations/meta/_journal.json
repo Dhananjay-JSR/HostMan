@@ -1,0 +1,34 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1699883266567,
+      "tag": "0000_lively_ultimatum",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1699884341196,
+      "tag": "0001_bent_skin",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1699904120429,
+      "tag": "0002_lovely_reptil",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1699904756122,
+      "tag": "0003_nice_robbie_robertson",
+      "breakpoints": true
+    }
+  ]
+}

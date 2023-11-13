@@ -1,0 +1,1 @@
+ALTER TABLE "Proxies" ADD COLUMN "name" varchar(256);

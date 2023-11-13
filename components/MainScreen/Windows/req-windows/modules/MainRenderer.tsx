@@ -16,8 +16,8 @@ export default function MainRenderer({
   optionState: OptionTypes;
   setOptionState: Dispatch<SetStateAction<OptionTypes>>;
 }) {
-  const [] = useState("");
-  const [key, setKey] = useState("");
+  // const [] = useState("");
+  // const [key, setKey] = useState("");
   if (selectTab == Tabs.PARAMETERS) {
     return (
       <ParameterModal

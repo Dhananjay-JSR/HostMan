@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { OptionTypes, BodyType } from "./interface";
+import { OptionTypes, BodyType, AuthType } from "./interface";
 
 export function ParameterModal({
   optionState,
@@ -46,7 +46,9 @@ export function ParameterModal({
                               id: prev.Parameter.filter((f) => f.id == e.id)[0]
                                 .id,
                               key: VALYE,
-                              Value: "",
+                              Value: prev.Parameter.filter(
+                                (f) => f.id == e.id
+                              )[0].Value,
                             },
                             {
                               id:
@@ -88,7 +90,9 @@ export function ParameterModal({
                                   (f) => f.id == e.id
                                 )[0].id,
                                 key: VALYE,
-                                Value: "",
+                                Value: prev.Parameter.filter(
+                                  (f) => f.id == e.id
+                                )[0].Value,
                               },
                               ...prev.Parameter.filter(
                                 (f, index) => index > Position
@@ -108,6 +112,86 @@ export function ParameterModal({
                   <input
                     placeholder="Value"
                     type="text"
+                    value={e.Value}
+                    onChange={(eve) => {
+                      let VALYE = eve.target.value;
+
+                      // check if it's the last Input and on Press create new Value
+                      // console.log(optionState.Parameter.indexOf(e), optionState.Parameter.length-1)
+                      if (
+                        optionState.Parameter.indexOf(e) ==
+                        optionState.Parameter.length - 1
+                      ) {
+                        // it is Last Element
+                        //   @ts-ignore
+                        setOptionState((prev) => {
+                          // const lastId = prev.Parameter[prev.Parameter.length - 1].id;
+                          let NewBlock: {
+                            id: number;
+                            key: string;
+                            Value: string;
+                          }[] = [];
+
+                          NewBlock.push(
+                            {
+                              id: prev.Parameter.filter((f) => f.id == e.id)[0]
+                                .id,
+                              key: prev.Parameter.filter((f) => f.id == e.id)[0]
+                                .key,
+                              Value: VALYE,
+                            },
+                            {
+                              id:
+                                prev.Parameter.filter((f) => f.id == e.id)[0]
+                                  .id + 1,
+                              key: "",
+                              Value: "",
+                            }
+                          );
+                          return {
+                            ...prev,
+                            Parameter: [
+                              ...prev.Parameter.filter((f) => f.id !== e.id),
+                              ,
+                              ...NewBlock,
+                            ],
+                          };
+                        });
+                      } else {
+                        setOptionState((prev) => {
+                          // to keep updating the value , and keeping positon as Intact Filter Out BAsed on Position
+                          let Position = -1;
+                          prev.Parameter.forEach((value, index) => {
+                            if (
+                              value.id ==
+                              prev.Parameter.filter((f) => f.id == e.id)[0].id
+                            ) {
+                              Position = index;
+                            }
+                          });
+                          return {
+                            ...prev,
+                            Parameter: [
+                              ...prev.Parameter.filter(
+                                (f, index) => index < Position
+                              ),
+                              {
+                                id: prev.Parameter.filter(
+                                  (f) => f.id == e.id
+                                )[0].id,
+                                key: prev.Parameter.filter(
+                                  (f) => f.id == e.id
+                                )[0].key,
+                                Value: VALYE,
+                              },
+                              ...prev.Parameter.filter(
+                                (f, index) => index > Position
+                              ),
+                            ],
+                          };
+                        });
+                      }
+                    }}
                     spellCheck={false}
                     className="bg-black focus:outline-none   w-full px-2"
                   />
@@ -205,7 +289,96 @@ export function HeaderTabModal({
                             {
                               id: prev.Header.filter((f) => f.id == e.id)[0].id,
                               key: VALYE,
+                              Value: prev.Header.filter((f) => f.id == e.id)[0]
+                                .Value,
+                            },
+                            {
+                              id:
+                                prev.Header.filter((f) => f.id == e.id)[0].id +
+                                1,
+                              key: "",
                               Value: "",
+                            }
+                          );
+                          return {
+                            ...prev,
+                            Header: [
+                              ...prev.Header.filter((f) => f.id !== e.id),
+                              ,
+                              ...NewBlock,
+                            ],
+                          };
+                        });
+                      } else {
+                        setOptionState((prev) => {
+                          // to keep updating the value , and keeping positon as Intact Filter Out BAsed on Position
+                          //  it calculates the Index of Item we are currently uodating and store the value
+                          let Position = -1;
+                          prev.Header.forEach((value, index) => {
+                            if (
+                              value.id ==
+                              prev.Header.filter((f) => f.id == e.id)[0].id
+                            ) {
+                              Position = index;
+                            }
+                          });
+                          return {
+                            ...prev,
+                            Header: [
+                              ...prev.Header.filter(
+                                (f, index) => index < Position
+                              ),
+                              {
+                                id: prev.Header.filter((f) => f.id == e.id)[0]
+                                  .id,
+                                key: VALYE,
+                                Value: prev.Header.filter(
+                                  (f) => f.id == e.id
+                                )[0].Value,
+                              },
+                              ...prev.Header.filter(
+                                (f, index) => index > Position
+                              ),
+                            ],
+                          };
+                        });
+                      }
+                    }}
+                    placeholder="Key"
+                    type="text"
+                    spellCheck={false}
+                    className="bg-black  focus:outline-none  w-full px-1"
+                  />
+                </td>
+                <td className="border border-slate-600">
+                  <input
+                    placeholder="Value"
+                    type="text"
+                    value={e.Value}
+                    onChange={(eve) => {
+                      let VALYE = eve.target.value;
+                      // check if it's the last Input and on Press create new Value
+                      // console.log(optionState.Parameter.indexOf(e), optionState.Parameter.length-1)
+                      if (
+                        optionState.Header.indexOf(e) ==
+                        optionState.Header.length - 1
+                      ) {
+                        // it is Last Element
+                        //   @ts-ignore
+                        setOptionState((prev) => {
+                          // const lastId = prev.Parameter[prev.Parameter.length - 1].id;
+                          let NewBlock: {
+                            id: number;
+                            key: string;
+                            Value: string;
+                          }[] = [];
+
+                          NewBlock.push(
+                            {
+                              id: prev.Header.filter((f) => f.id == e.id)[0].id,
+                              key: prev.Header.filter((f) => f.id == e.id)[0]
+                                .key,
+                              Value: VALYE,
                             },
                             {
                               id:
@@ -245,8 +418,9 @@ export function HeaderTabModal({
                               {
                                 id: prev.Header.filter((f) => f.id == e.id)[0]
                                   .id,
-                                key: VALYE,
-                                Value: "",
+                                key: prev.Header.filter((f) => f.id == e.id)[0]
+                                  .key,
+                                Value: VALYE,
                               },
                               ...prev.Header.filter(
                                 (f, index) => index > Position
@@ -256,16 +430,6 @@ export function HeaderTabModal({
                         });
                       }
                     }}
-                    placeholder="Key"
-                    type="text"
-                    spellCheck={false}
-                    className="bg-black  focus:outline-none  w-full px-1"
-                  />
-                </td>
-                <td className="border border-slate-600">
-                  <input
-                    placeholder="Value"
-                    type="text"
                     spellCheck={false}
                     className="bg-black focus:outline-none   w-full px-2"
                   />
@@ -338,7 +502,7 @@ export function BodyModal({
               let BodyType = e.currentTarget.value;
               setOptionState((prev) => {
                 let OldState = { ...prev };
-                OldState.Body.type = BodyType
+                OldState.Body.type = BodyType as BodyType;
                 return OldState;
               });
             }}
@@ -421,7 +585,9 @@ export function BodyModal({
                                       (f) => f.id == formValue.id
                                     )[0].id,
                                     key: VALYE,
-                                    Value: "",
+                                    Value:prev.Body.forms.filter(
+                                      (f) => f.id == formValue.id
+                                    )[0].value,
                                   },
                                   {
                                     id:
@@ -473,7 +639,9 @@ export function BodyModal({
                                           (f) => f.id == formValue.id
                                         )[0].id,
                                         key: VALYE,
-                                        Value: "",
+                                        Value: prev.Body.forms.filter(
+                                          (f) => f.id == formValue.id
+                                        )[0].value,
                                       },
                                       ...prev.Body.forms.filter(
                                         (f, index) => index > Position
@@ -506,6 +674,115 @@ export function BodyModal({
                       </td>
                       <td className="border border-slate-600">
                         <input
+                        value={formValue.value}
+
+                        onChange={(eve) => {
+                          let VALYE = eve.target.value;
+                          // console.log(VALYE);
+                          // check if it's the last Input and on Press create new Value
+                          // console.log(optionState.Parameter.indexOf(e), optionState.Parameter.length-1)
+                          if (
+                            optionState.Body.forms.indexOf(formValue) ==
+                            optionState.Body.forms.length - 1
+                          ) {
+                            // it is Last Element
+                            //   @ts-ignore
+                            setOptionState((prev) => {
+                              // const lastId = prev.Parameter[prev.Parameter.length - 1].id;
+                              let NewBlock: {
+                                id: number;
+                                key: string;
+                                Value: string;
+                              }[] = [];
+
+                              NewBlock.push(
+                                {
+                                  id: prev.Body.forms.filter(
+                                    (f) => f.id == formValue.id
+                                  )[0].id,
+                                  key: prev.Body.forms.filter(
+                                    (f) => f.id == formValue.id
+                                  )[0].key,
+                                  Value: VALYE,
+                                },
+                                {
+                                  id:
+                                    prev.Body.forms.filter(
+                                      (f) => f.id == formValue.id
+                                    )[0].id + 1,
+                                  key: "",
+                                  Value: "",
+                                }
+                              );
+                              return {
+                                ...prev,
+                                Body: {
+                                  ...prev.Body,
+                                  forms: [
+                                    ...prev.Body.forms.filter(
+                                      (f) => f.id !== formValue.id
+                                    ),
+                                    ...NewBlock,
+                                  ],
+                                },
+                              };
+                            });
+                          } else {
+                            // @ts-ignore
+                            setOptionState((prev) => {
+                              // to keep updating the value , and keeping positon as Intact Filter Out BAsed on Position
+                              let Position = -1;
+                              prev.Body.forms.forEach((value, index) => {
+                                if (
+                                  value.id ==
+                                  prev.Body.forms.filter(
+                                    (f) => f.id == formValue.id
+                                  )[0].id
+                                ) {
+                                  Position = index;
+                                }
+                              });
+                              return {
+                                ...prev,
+                                Body: {
+                                  ...prev.Body,
+                                  forms: [
+                                    ...prev.Body.forms.filter(
+                                      (f, index) => index < Position
+                                    ),
+                                    {
+                                      id: prev.Body.forms.filter(
+                                        (f) => f.id == formValue.id
+                                      )[0].id,
+                                      key: prev.Body.forms.filter(
+                                        (f) => f.id == formValue.id
+                                      )[0].key,
+                                      Value: VALYE,
+                                    },
+                                    ...prev.Body.forms.filter(
+                                      (f, index) => index > Position
+                                    ),
+                                  ],
+                                },
+                                // Header: [
+                                //   ...prev.Header.filter(
+                                //     (f, index) => index < Position
+                                //   ),
+                                //   {
+                                //     id: prev.Header.filter((f) => f.id == e.id)[0]
+                                //       .id,
+                                //     key: VALYE,
+                                //     Value: "",
+                                //   },
+                                //   ...prev.Header.filter(
+                                //     (f, index) => index > Position
+                                //   ),
+                                // ],
+                              };
+                            });
+                          }
+                        }}
+
                           placeholder="Value"
                           type="text"
                           spellCheck={false}
@@ -590,26 +867,26 @@ export function AuthorisationModal({
             let AuthType = e.currentTarget.value;
             setOptionState((prev) => {
               let OldState = { ...prev };
-              OldState.Auth.type = AuthType;
+              OldState.Auth.type = AuthType as AuthType;
               return OldState;
             });
           }}
           defaultValue={optionState.Auth.type}
           className="focus:outline-none ml-3 bg-gray-800 py-1 px-2 rounded-sm text-white"
         >
-          <option className=" " value="NONE">
+          <option className=" " value={AuthType.NONE}>
             None
           </option>
-          <option value="BASIC_AUTH">Basic Auth</option>
-          <option value="BEARER_TOKEN">Bearer Token</option>
+          <option value={AuthType.BASIC}>Basic Auth</option>
+          <option value={AuthType.BEARER}>Bearer Token</option>
         </select>
       </div>
-      {optionState.Auth.type == "NONE" && (
+      {optionState.Auth.type == AuthType.NONE && (
         <div className="min-h-[170px] flex justify-center items-center font-bold underline ">
           This Request won&apos;t be Using Any Auth
         </div>
       )}
-      {optionState.Auth.type == "BEARER_TOKEN" && (
+      {optionState.Auth.type == AuthType.BEARER && (
         <div className="min-h-[170px] pt-3">
           <span>Bearer Token</span>
           <input
@@ -628,7 +905,7 @@ export function AuthorisationModal({
         </div>
       )}
 
-      {optionState.Auth.type == "BASIC_AUTH" && (
+      {optionState.Auth.type == AuthType.BASIC && (
         <div className="pt-3">
           <div className="w-fit flex flex-col gap-4">
             <div className="w-full flex flex-row justify-between">

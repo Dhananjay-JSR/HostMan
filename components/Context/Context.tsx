@@ -1,11 +1,14 @@
 "use client";
 import { AxiosResponse } from "axios";
+import { Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
 import { Dispatch, createContext, useReducer } from "react";
 type AppState = {
   method: "GET" | "POST" | "PATCH" | "DELETE";
   url: string;
   isInitialRequestDown: boolean;
   isLoading: boolean;
+  windowName:string;
   response:null | AxiosResponse<
   any,
   any
@@ -16,11 +19,13 @@ export enum AppOperations {
   UPDATE_URL,
   TOGGLE_INITIAL,
   TOGGLE_LOADING,
-  UPDATE_RESPONSE
+  UPDATE_RESPONSE,
+  UPDATE_WINDOW_NAME
 }
 
 const DefaultState: AppState = {
   method: "GET",
+  windowName: "Untitled",
   url: "https://echo.dhananjaay.dev/",
   isInitialRequestDown: false,
   isLoading: false,
@@ -61,6 +66,11 @@ function ReducerFunction(
             ...state,
             response:action.payload
         }
+        case AppOperations.UPDATE_WINDOW_NAME:
+          return {
+            ...state,
+            windowName: action.payload
+          }
     default:
       return {
         ...state,
@@ -84,10 +94,14 @@ export const StorageContext = createContext<{
   }
 );
 
-export function StorageProvider({ children }: { children: React.ReactNode }) {
+export function StorageProvider({ children,session }: { children: React.ReactNode,session:Session }) {
   const [state, dispatch] = useReducer(ReducerFunction, DefaultState);
 
   return (
+    
+    <SessionProvider session={session}>
+
+
     <StorageContext.Provider
       value={{
         state: state,
@@ -96,5 +110,6 @@ export function StorageProvider({ children }: { children: React.ReactNode }) {
     >
       {children}
     </StorageContext.Provider>
+    </SessionProvider>
   );
 }

@@ -3,7 +3,7 @@ import { AppOperations, StorageContext } from "@/components/Context/Context";
 import { useContext } from "react";
 
 export default function MethodDropdown() {
-  const { dispatch } = useContext(StorageContext);
+  const { dispatch,state } = useContext(StorageContext);
   return (
     <select
       onChange={(e) => {
@@ -14,7 +14,8 @@ export default function MethodDropdown() {
         });
       }}
       name="RequestMethods"
-      defaultValue={"GET"}
+      // defaultValue={"GET"}
+      value={state.method}
       className="bg-gray-800 py-1 px-2 rounded-tl-sm  rounded-bl-sm outline-none"
     >
       <option value="GET">GET</option>
