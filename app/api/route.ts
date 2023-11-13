@@ -114,15 +114,16 @@ export async function POST(REQUEST: NextRequest) {
   });
 
   if (data.email) {
-    console.warn("Post is Disabled for Now")
+    // console.warn("Post is Disabled for Now")
     
 
-    // let TempData = await db.insert(Proxies).values({
-    //   email: data.email as any,
-    //   method: data.method.toUpperCase() as any,
-    //   url: data.url,
-    // });
-    // console.log("Proxy inserted")
+    let TempData = await db.insert(Proxies).values({
+      email: data.email as any,
+      method: data.method.toUpperCase() as any,
+      url: data.url,
+      name: data.windowName
+    });
+    console.log("Proxy inserted")
 
 
 

@@ -5,8 +5,10 @@ import { useContext } from "react";
 
 export default function HistoryPlay({
     method,
-    url
+    url,
+    windowsName
 }:{
+  windowsName:string 
     method:"DELETE"| "POST" | "GET" | "PATCH" ,
     url:string
 }) {
@@ -14,11 +16,15 @@ export default function HistoryPlay({
   return (
     <div className="text-xs flex justify-between px-3 gap-2">
       <span className={` ${method=="GET" ? "text-green-500" : method=="DELETE" ? "text-red-600" : method=="PATCH" ?"text-yellow-400" : "text-teal-600"}`}>{method}</span>
-      <span className="truncate">{url}</span>
+      <span className="truncate">{windowsName}</span>
       <button className="group" onClick={()=>{
         dispatch({
           type:AppOperations.UPDATE_URL,
           payload: url
+        })
+        dispatch({
+          type:AppOperations.UPDATE_WINDOW_NAME,
+          payload:windowsName
         })
         dispatch({
           type:AppOperations.UPDATE_METHOD,

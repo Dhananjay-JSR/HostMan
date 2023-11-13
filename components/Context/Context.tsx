@@ -8,6 +8,7 @@ type AppState = {
   url: string;
   isInitialRequestDown: boolean;
   isLoading: boolean;
+  windowName:string;
   response:null | AxiosResponse<
   any,
   any
@@ -18,11 +19,13 @@ export enum AppOperations {
   UPDATE_URL,
   TOGGLE_INITIAL,
   TOGGLE_LOADING,
-  UPDATE_RESPONSE
+  UPDATE_RESPONSE,
+  UPDATE_WINDOW_NAME
 }
 
 const DefaultState: AppState = {
   method: "GET",
+  windowName: "Untitled",
   url: "https://echo.dhananjaay.dev/",
   isInitialRequestDown: false,
   isLoading: false,
@@ -63,6 +66,11 @@ function ReducerFunction(
             ...state,
             response:action.payload
         }
+        case AppOperations.UPDATE_WINDOW_NAME:
+          return {
+            ...state,
+            windowName: action.payload
+          }
     default:
       return {
         ...state,

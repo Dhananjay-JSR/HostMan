@@ -22,10 +22,12 @@ export default function SideBarWindow() {
         setResponse((prev) => [
           ...prev,
           {
+            updateDate: new Date(),
             email: data?.user?.email,
             id: prev?.length,
             method: state?.method,
             url: state?.url,
+            name: state.windowName
           },
         ]);
       }
@@ -82,7 +84,8 @@ export default function SideBarWindow() {
             response?.map((prev) => (
               <HistoryPlay
                 key={prev.id}
-                url={prev.url!}
+                url={prev.url! as any}
+                windowsName={prev.name as any}
                 method={prev.method! as any}
               />
             ))

@@ -30,6 +30,7 @@ export default function SendButton({optionsState}: { optionsState: OptionTypes }
         let Data;
         if (data?.user?.email) {
           Data = await axios.post("/api", {
+            windowName:state.windowName,
             url: state.url,
             method: state.method,
             email: data?.user?.email,
@@ -37,6 +38,7 @@ export default function SendButton({optionsState}: { optionsState: OptionTypes }
           });
         } else {
           Data = await axios.post("/api", {
+            windowName:state.windowName,
             url: state.url,
             method: state.method,
             ...optionsState
