@@ -1,3 +1,8 @@
+'use client'
+
+import { AppOperations, StorageContext } from "@/components/Context/Context";
+import { useContext } from "react";
+
 export default function HistoryPlay({
     method,
     url
@@ -5,11 +10,21 @@ export default function HistoryPlay({
     method:string,
     url:string
 }) {
+  const {dispatch} = useContext(StorageContext)
   return (
     <div className="text-xs flex justify-between px-3 gap-2">
       <span className="text-red-500">{method}</span>
       <span className="truncate">{url}</span>
-      <button className="group">
+      <button className="group" onClick={()=>{
+        dispatch({
+          type:AppOperations.UPDATE_URL,
+          payload: url
+        })
+        dispatch({
+          type:AppOperations.UPDATE_METHOD,
+          payload:method
+        })
+      }}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"

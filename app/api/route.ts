@@ -53,12 +53,12 @@ export async function POST(REQUEST: NextRequest) {
     //     url:data.url,
     //     method:data.method
     // })
-
     let TempData = await db.insert(Proxies).values({
       email: data.email as any,
       method: data.method.toUpperCase() as any,
       url: data.url,
     });
+    console.log("Proxy inserted")
     // if (Data.rowCount === 0) {
     //   return NextResponse.json(
     //     {
@@ -88,7 +88,7 @@ export async function POST(REQUEST: NextRequest) {
 
   const dataSizeInKB = dataSizeInBytes / 1024;
 
-  if (ResponseData.headers["content-type"] === "application/json") {
+  if (ResponseData.headers["content-type"].includes("application/json") ) {
     return NextResponse.json({
       responsePayload: ResponseData.data,
       responseHeaders: ResponseData.headers,
