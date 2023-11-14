@@ -36,6 +36,11 @@ function AxiosIntersecpt() {
   return axios;
 }
 export async function POST(REQUEST: NextRequest) {
+
+
+  try {
+
+  
   const data = (await REQUEST.json()) as {
     url: string;
     method: string;
@@ -171,5 +176,20 @@ export async function POST(REQUEST: NextRequest) {
     responseDuration: ResponseData.duration,
     responseSize: dataSizeInKB.toFixed(2),
   });
+
+}
+catch(e){
+  return NextResponse.json({
+    responsePayload: {
+      message:"Something Went Wrong",
+      error:e.message
+    },
+    responseHeaders: {},
+    responseDuration: 0,
+    responseSize: 0,
+  },{
+    status:500,
+  });
+}
 
 }
